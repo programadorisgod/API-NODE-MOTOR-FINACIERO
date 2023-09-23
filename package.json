@@ -1,0 +1,27 @@
+{
+  "author": "Camilo Dev",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "mongoose": "^7.5.2"
+  },
+  "description": "",
+  "devDependencies": {
+    "colors": "^1.4.0",
+    "standard": "^17.1.0"
+  },
+  "eslintConfig": {
+    "extends": "./node_modules/standard/eslintrc.json"
+  },
+  "keywords": [],
+  "license": "ISC",
+  "main": "index.js",
+  "name": "api",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development node --watch index.js"
+  },
+  "type": "module",
+  "version": "1.0.0"
+}
