@@ -5,6 +5,7 @@ import { config } from 'dotenv'
 import { connectDB } from './src/config/Database/conexion.js'
 import { getPort } from './src/config/port.js'
 import MacroRouter from './src/routes/Macro/Macro.js'
+import routerMicro from './src/routes/Micro/Micro.js'
 config()
 
 const app = express()
@@ -17,6 +18,7 @@ app.use(express.json())
 connectDB()
 
 app.use(MacroRouter)
+app.use(routerMicro)
 
 app.get('/', (req, res) => {
   res.json('Hello World!')
