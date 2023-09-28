@@ -62,6 +62,11 @@ export const PostAcciones = async (req, res) => {
     const accionesresponse = await fetch('http://127.0.0.1:8000/acciones')
     const accionesdata = await accionesresponse.json()
     const accionesFormat = Object.entries(accionesdata).map((acciones) => {
+      const currentDate = new Date()
+      const year = currentDate.getFullYear()
+      const month = currentDate.getMonth() + 1
+      const day = currentDate.getDate()
+      const dateCurrent = `${year}-${month}-${day}`
       return {
         nemotecnico: acciones[0],
         name: acciones[1].nombre,
@@ -74,7 +79,8 @@ export const PostAcciones = async (req, res) => {
         open_price: acciones[1].precio_apertura,
         max_price: acciones[1].precio_maximo,
         min_price: acciones[1].precio_minimo,
-        average_price: acciones[1].precio_promedio
+        average_price: acciones[1].precio_promedio,
+        date: dateCurrent
       }
     })
     console.log(accionesFormat)

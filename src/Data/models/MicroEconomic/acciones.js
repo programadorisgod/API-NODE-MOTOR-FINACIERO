@@ -12,7 +12,8 @@ const AccionesSchema = new Schema({
   open_price: { type: String, required: true },
   max_price: { type: String, required: true },
   min_price: { type: String, required: true },
-  average_price: { type: String, required: true }
+  average_price: { type: String, required: true },
+  date: { type: String, required: true }
 
 }, {
   timestamps: false,
