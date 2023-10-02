@@ -1,11 +1,13 @@
 import express, { urlencoded } from 'express'
 import cors from 'cors'
+// eslint-disable-next-line no-unused-vars
 import colors from 'colors'
 import { config } from 'dotenv'
 import { connectDB } from './src/config/Database/conexion.js'
 import { getPort } from './src/config/port.js'
 import MacroRouter from './src/routes/Macro/Macro.js'
 import routerMicro from './src/routes/Micro/Micro.js'
+import swaggerDocs from './swagger.js'
 config()
 
 const app = express()
@@ -26,7 +28,8 @@ app.get('/', (req, res) => {
 
 getPort(disaretPort).then((port) => {
   app.listen(port, () => {
-    console.log(`[Server] Running on port ${port}`.yellow.bold)
+    console.log(`[Server] Running on port http://localhost:${port}`.yellow.bold)
+    swaggerDocs(app, port)
   })
 }).catch((err) => {
   console.log(err)

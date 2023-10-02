@@ -9,9 +9,7 @@ const ipcSchema = new Schema({
 }, {
   timestamps: false,
   versionKey: false
-}
-
-)
+})
 const Ipc = model('Ipc', ipcSchema)
 
 export default Ipc

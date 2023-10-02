@@ -23,7 +23,6 @@ export const PostInflation = async (req, res) => {
 
     res.status(200).json({ inflationData })
   } catch (error) {
-    console.log(error)
     res.status(500).json({ message: 'Error saving inflation data' })
   }
 }
@@ -44,7 +43,6 @@ export const PostDesempleo = async (req, res) => {
 
     res.status(200).json({ unemploymentData })
   } catch (error) {
-    console.log(error)
     res.status(500).json({ message: 'Error saving unemployment data' })
   }
 }
@@ -65,7 +63,6 @@ export const PostPibCurrent = async (req, res) => {
 
     res.status(200).json({ pibCurrentData })
   } catch (error) {
-    console.log(error)
     res.status(500).json({ message: 'Error saving pibCurrent data' })
   }
 }
@@ -86,7 +83,6 @@ export const PostPibConst = async (req, res) => {
 
     res.status(200).json({ pibConsttData })
   } catch (error) {
-    console.log(error)
     res.status(500).json({ message: 'Error saving pibCurrent data' })
   }
 }
@@ -107,7 +103,6 @@ export const PostTip = async (req, res) => {
 
     res.status(200).json({ tipData })
   } catch (error) {
-    console.log(error)
     res.status(500).json({ message: 'Error saving tip data' })
   }
 }
@@ -129,19 +124,17 @@ export const PostDolar = async (req, res) => {
 
     res.status(200).json({ dolarData })
   } catch (error) {
-    console.log(error)
     res.status(500).json({ message: 'Error saving dolar data' })
   }
 }
 
-// Obtener las macro
+// Get Data
 export const GetTip = async (req, res) => {
   try {
     const tipData = await Tip.find()
 
     res.status(200).json({ tipData })
   } catch (error) {
-    console.log(error)
     res.status(500).json({ message: 'Error getting tip data' })
   }
 }
@@ -152,7 +145,6 @@ export const getDolar = async (req, res) => {
 
     res.status(200).json({ dolarData })
   } catch (error) {
-    console.log(error)
     res.status(500).json({ message: 'Error getting dolar data' })
   }
 }
@@ -163,7 +155,6 @@ export const GetPIBCurrent = async (req, res) => {
 
     res.status(200).json({ pibCurrentData })
   } catch (error) {
-    console.log(error)
     res.status(500).json({ message: 'Error getting pibCurrent data' })
   }
 }
@@ -174,7 +165,6 @@ export const GetPIBConst = async (req, res) => {
 
     res.status(200).json({ pibConstData })
   } catch (error) {
-    console.log(error)
     res.status(500).json({ message: 'Error getting pibConst data' })
   }
 }
@@ -185,7 +175,6 @@ export const GetUnemployment = async (req, res) => {
 
     res.status(200).json({ unemploymentData })
   } catch (error) {
-    console.log(error)
     res.status(500).json({ message: 'Error getting unemployment data' })
   }
 }
@@ -195,7 +184,6 @@ export const GetInflation = async (req, res) => {
 
     res.status(200).json({ inflationData })
   } catch (error) {
-    console.log(error)
     res.status(500).json({ message: 'Error getting inflation data' })
   }
 }

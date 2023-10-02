@@ -21,7 +21,6 @@ export const PostIpc = async (req, res) => {
     const ipc = await Ipc.create(ipcformtat)
     res.status(201).json(ipc)
   } catch (error) {
-    console.log(error)
     res.status(500).json({ error: 'Server internal Error' })
   }
 }
@@ -52,7 +51,6 @@ export const PostMetales = async (req, res) => {
     const metales = await Metales.create(metalesformtat)
     res.status(201).json(metales)
   } catch (error) {
-    console.log(error)
     res.status(500).json({ error: 'Server internal Error' })
   }
 }
@@ -83,18 +81,29 @@ export const PostAcciones = async (req, res) => {
         date: dateCurrent
       }
     })
-    console.log(accionesFormat)
     const acciones = await Acciones.create(accionesFormat)
     res.status(201).json(acciones)
   } catch (error) {
+    console.log(error)
     res.status(500).json({ error: 'Server internal Error' })
   }
 }
+
+// Get Data
 
 export const GetMetales = async (req, res) => {
   try {
     const metales = await Metales.find()
     res.status(200).json(metales)
+  } catch (error) {
+    res.status(500).json({ error: 'Server internal Error' })
+  }
+}
+
+export const GetAcciones = async (req, res) => {
+  try {
+    const acciones = await Acciones.find()
+    res.status(200).json(acciones)
   } catch (error) {
     res.status(500).json({ error: 'Server internal Error' })
   }
