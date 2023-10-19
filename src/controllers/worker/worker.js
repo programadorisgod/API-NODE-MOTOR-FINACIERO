@@ -1,5 +1,6 @@
 import { parentPort } from 'node:worker_threads'
-
+import { config } from 'dotenv'
+config()
 parentPort.on('message', (message) => {
   if (message === 'start') {
     fetchDolar()
@@ -20,14 +21,17 @@ const fetchDolar = async () => {
     const minutes = date.getMinutes()
     const dateNow = `${year}-${month}-${day} ${hour}:${minutes}`
     setInterval(async () => {
-      const url = 'http://apilayer.net/api/live?access_key=41f8a78c74c5b699ad4485b1f3dcdfed&source=USD'
+      const url = `http://api.currencylayer.com/live?access_key=${process.env.DOLAR_API_KEY}&currencies=COP&format=1`
       const response = await fetch(url)
+
       const data = await response.json()
+
       const dolar = data.quotes.USDCOP
       const dataNow = {
         time: dateNow,
         value: dolar
       }
+
       parentPort.postMessage(dataNow)
     }, 60000)
   } catch (error) {

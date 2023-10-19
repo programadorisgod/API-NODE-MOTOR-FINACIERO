@@ -16,7 +16,12 @@ config()
 
 const app = express()
 const server = createServer(app)
-const io = new Server(server)
+const io = new Server(server, {
+  cors: {
+    origin: '*',
+    methods: ['GET', 'POST']
+  }
+})
 let socket = null
 
 const disaretPort = process.env.PORT || 4000
