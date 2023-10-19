@@ -8,12 +8,13 @@
     "mongoose": "^7.5.2",
     "socket.io": "^4.7.2",
     "swagger-jsdoc": "^6.2.8",
-    "swagger-ui-express": "^5.0.0"
+    "swagger-ui-express": "^5.0.0",
+    "colors": "^1.4.0"
+
   },
   "description": "",
   "devDependencies": {
     "@flydotio/dockerfile": "latest",
-    "colors": "^1.4.0",
     "standard": "^17.1.0"
   },
   "eslintConfig": {
