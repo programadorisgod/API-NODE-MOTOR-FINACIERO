@@ -93,7 +93,7 @@ export const PostAcciones = async (req, res) => {
 
 export const GetMetales = async (req, res) => {
   try {
-    const metales = await Metales.find()
+    const metales = await Metales.find().maxTimeMS(30000)
     res.status(200).json(metales)
   } catch (error) {
     res.status(500).json({ error: 'Server internal Error' })
@@ -102,7 +102,7 @@ export const GetMetales = async (req, res) => {
 
 export const GetAcciones = async (req, res) => {
   try {
-    const acciones = await Acciones.find()
+    const acciones = await Acciones.find().maxTimeMS(30000)
     res.status(200).json(acciones)
   } catch (error) {
     res.status(500).json({ error: 'Server internal Error' })
@@ -111,7 +111,7 @@ export const GetAcciones = async (req, res) => {
 
 export const GetIpc = async (req, res) => {
   try {
-    const ipc = await Ipc.find()
+    const ipc = await Ipc.find().maxTimeMS(30000)
     res.status(200).json(ipc)
   } catch (error) {
     res.status(500).json({ error: 'Server internal Error' })

@@ -121,7 +121,7 @@ export const PostDolar = async (req, res) => {
     const dateDolar = dolarFormat[0].year_month_day.split('-').pop()
     const dataSort = dolarFormat.sort()
 
-    const dbDolar = await DOLAR.find()
+    const dbDolar = await DOLAR.find().maxTimeMS(30000)
     const dolarSort = dbDolar.sort()
     const dolarLastDay = dolarSort[0].year_month_day.split('-').pop()
 
@@ -139,7 +139,7 @@ export const PostDolar = async (req, res) => {
 // Get Data
 export const GetTip = async (req, res) => {
   try {
-    const tipData = await Tip.find()
+    const tipData = await Tip.find().maxTimeMS(30000)
 
     res.status(200).json({ tipData })
   } catch (error) {
@@ -149,7 +149,7 @@ export const GetTip = async (req, res) => {
 
 export const getDolar = async (req, res) => {
   try {
-    const dolarData = await DOLAR.find()
+    const dolarData = await DOLAR.find().maxTimeMS(30000)
     console.log(dolarData)
     res.status(200).json({ dolarData })
   } catch (error) {
@@ -170,7 +170,7 @@ export const GetPIBCurrent = async (req, res) => {
 
 export const GetPIBConst = async (req, res) => {
   try {
-    const pibConstData = await PIBCONST.find()
+    const pibConstData = await PIBCONST.find().maxTimeMS(30000)
 
     res.status(200).json({ pibConstData })
   } catch (error) {
@@ -180,7 +180,7 @@ export const GetPIBConst = async (req, res) => {
 
 export const GetUnemployment = async (req, res) => {
   try {
-    const unemploymentData = await Unemployment.find()
+    const unemploymentData = await Unemployment.find().maxTimeMS(30000)
 
     res.status(200).json({ unemploymentData })
   } catch (error) {
@@ -189,7 +189,7 @@ export const GetUnemployment = async (req, res) => {
 }
 export const GetInflation = async (req, res) => {
   try {
-    const inflationData = await Inflation.find()
+    const inflationData = await Inflation.find().maxTimeMS(30000)
 
     res.status(200).json({ inflationData })
   } catch (error) {
