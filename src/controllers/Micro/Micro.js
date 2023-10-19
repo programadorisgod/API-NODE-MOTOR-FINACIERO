@@ -4,7 +4,7 @@ import Metales from '../../Data/models/MicroEconomic/metales.js'
 
 export const PostIpc = async (req, res) => {
   try {
-    const ipcresponse = await fetch('http://127.0.0.1:8000/ipc')
+    const ipcresponse = await fetch('https://mpf.fly.dev/ipc')
     const ipcdata = await ipcresponse.json()
     const ipcformtat = Object.entries(ipcdata).map((ipc) => {
       return {
@@ -27,7 +27,7 @@ export const PostIpc = async (req, res) => {
 
 export const PostMetales = async (req, res) => {
   try {
-    const metalesresponse = await fetch('http://127.0.0.1:8000/metales')
+    const metalesresponse = await fetch('https://mpf.fly.dev/metales')
     const metalesdata = await metalesresponse.json()
 
     const metalesformtat = Object.entries(metalesdata).map((metales) => {
@@ -57,7 +57,7 @@ export const PostMetales = async (req, res) => {
 
 export const PostAcciones = async (req, res) => {
   try {
-    const accionesresponse = await fetch('http://127.0.0.1:8000/acciones')
+    const accionesresponse = await fetch('https://mpf.fly.dev/acciones')
     const accionesdata = await accionesresponse.json()
     const accionesFormat = Object.entries(accionesdata).map((acciones) => {
       const currentDate = new Date()

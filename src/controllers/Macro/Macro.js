@@ -7,7 +7,7 @@ import DOLAR from '../../Data/models/MacroEconomic/dolar.js'
 
 export const PostInflation = async (req, res) => {
   try {
-    const inflation = await fetch('http://127.0.0.1:8000/inflacion')
+    const inflation = await fetch('https://mpf.fly.dev/inflacion')
     const inflationJson = await inflation.json()
 
     // eslint-disable-next-line camelcase
@@ -29,7 +29,7 @@ export const PostInflation = async (req, res) => {
 
 export const PostDesempleo = async (req, res) => {
   try {
-    const unemployment = await fetch('http://127.0.0.1:8000/desempleo')
+    const unemployment = await fetch('https://mpf.fly.dev/desempleo')
     const unemploymentJson = await unemployment.json()
 
     const unemploymentFormat = Object.entries(unemploymentJson).map((unemployment) => {
@@ -49,7 +49,7 @@ export const PostDesempleo = async (req, res) => {
 
 export const PostPibCurrent = async (req, res) => {
   try {
-    const pibCurrent = await fetch('http://127.0.0.1:8000/pib_corrientes')
+    const pibCurrent = await fetch('https://mpf.fly.dev/pib_corrientes')
     const pibCurrentJson = await pibCurrent.json()
 
     const pibCurrentFormat = Object.entries(pibCurrentJson).map((pibCurrent) => {
@@ -69,7 +69,7 @@ export const PostPibCurrent = async (req, res) => {
 
 export const PostPibConst = async (req, res) => {
   try {
-    const pibConst = await fetch('http://127.0.0.1:8000/pib_constantes')
+    const pibConst = await fetch('https://mpf.fly.dev/pib_constantes')
     const pibCurrentJson = await pibConst.json()
 
     const pibConstFormat = Object.entries(pibCurrentJson).map((pibConst) => {
@@ -89,7 +89,7 @@ export const PostPibConst = async (req, res) => {
 
 export const PostTip = async (req, res) => {
   try {
-    const tip = await fetch('http://127.0.0.1:8000/tip')
+    const tip = await fetch('https://mpf.fly.dev/tip')
     const tipJson = await tip.json()
 
     const tipFormat = Object.entries(tipJson).map((tip) => {
@@ -109,9 +109,8 @@ export const PostTip = async (req, res) => {
 
 export const PostDolar = async (req, res) => {
   try {
-    const dolar = await fetch('http://127.0.0.1:8000/dolar')
+    const dolar = await fetch('https://mpf.fly.dev/dolar')
     const dolarJson = await dolar.json()
-
     const dolarFormat = Object.entries(dolarJson).map((dolar) => {
       return {
         year_month_day: dolar[0],
@@ -119,11 +118,20 @@ export const PostDolar = async (req, res) => {
       }
     }
     )
+    const dateDolar = dolarFormat[0].year_month_day.split('-').pop()
+    const dataSort = dolarFormat.sort()
 
-    const dolarData = await DOLAR.create(dolarFormat)
+    const dbDolar = await DOLAR.find()
+    const dolarSort = dbDolar.sort()
+    const dolarLastDay = dolarSort[0].year_month_day.split('-').pop()
 
-    res.status(200).json({ dolarData })
+    if (parseInt(dateDolar) > parseInt(dolarLastDay)) {
+      const dolarData = await DOLAR.create(dataSort)
+      res.status(200).json({ dolarData })
+    }
+    res.status(200).json({ message: 'Dolar data already updated' })
   } catch (error) {
+    console.log(error)
     res.status(500).json({ message: 'Error saving dolar data' })
   }
 }
