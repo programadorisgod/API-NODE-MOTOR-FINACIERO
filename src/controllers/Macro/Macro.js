@@ -150,7 +150,6 @@ export const GetTip = async (req, res) => {
 export const getDolar = async (req, res) => {
   try {
     const dolarData = await DOLAR.find().maxTimeMS(30000)
-    console.log(dolarData)
     res.status(200).json({ dolarData })
   } catch (error) {
     console.log(error)
