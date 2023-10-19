@@ -35,6 +35,7 @@ app.use(routerMicro)
 app.get('/', (req, res) => {
   res.json('Hello World!')
 })
+
 app.get('/websocket', (req, res) => {
   res.sendFile(process.cwd() + '/client/index.html')
 })

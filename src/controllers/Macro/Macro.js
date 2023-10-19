@@ -150,9 +150,10 @@ export const GetTip = async (req, res) => {
 export const getDolar = async (req, res) => {
   try {
     const dolarData = await DOLAR.find()
-
+    console.log(dolarData)
     res.status(200).json({ dolarData })
   } catch (error) {
+    console.log(error)
     res.status(500).json({ message: 'Error getting dolar data' })
   }
 }
