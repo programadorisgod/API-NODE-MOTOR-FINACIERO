@@ -41,7 +41,7 @@ app.get('/', (req, res) => {
 app.get('/websocket', (req, res) => {
   res.sendFile(process.cwd() + '/client/index.html')
 })
-io.origins('*:*')
+
 io.on('connection', (clientSocket) => {
   socket = clientSocket
   console.log('a user connected')
