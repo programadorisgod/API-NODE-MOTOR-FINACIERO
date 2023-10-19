@@ -8,7 +8,6 @@ import { Server } from 'socket.io'
 import { createServer } from 'node:http'
 
 import { connectDB } from './src/config/Database/conexion.js'
-import { getPort } from './src/config/port.js'
 import MacroRouter from './src/routes/Macro/Macro.js'
 import routerMicro from './src/routes/Micro/Micro.js'
 import swaggerDocs from './swagger.js'
@@ -21,13 +20,12 @@ const io = new Server(server)
 let socket = null
 
 const disaretPort = process.env.PORT || 4000
+connectDB()
 
 app.disable('x-powered-by')
 app.use(cors())
 app.use(urlencoded({ extended: true }))
 app.use(express.json())
-
-connectDB()
 
 app.use(MacroRouter)
 app.use(routerMicro)
@@ -58,11 +56,7 @@ worker.on('message', (message) => {
   }
 })
 
-getPort(disaretPort).then((port) => {
-  server.listen(port, () => {
-    console.log(`[Server] Running on port http://localhost:${port}`.yellow.bold)
-    swaggerDocs(app, port)
-  })
-}).catch((err) => {
-  console.log(err)
+server.listen(disaretPort, () => {
+  console.log(`[Server] Running on port http://localhost:${disaretPort}`.yellow.bold)
+  swaggerDocs(app, disaretPort)
 })
