@@ -52,7 +52,6 @@ io.on('connection', (clientSocket) => {
 /** Iniciar el woker */
 worker.postMessage('start')
 worker.on('message', (message) => {
-  console.log(message)
   if (socket) {
     console.log('sending data to client')
     socket.emit('dataReceived', message)
