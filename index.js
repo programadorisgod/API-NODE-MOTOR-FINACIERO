@@ -23,7 +23,11 @@ const disaretPort = process.env.PORT || 4000
 connectDB()
 
 app.disable('x-powered-by')
-app.use(cors())
+app.use(cors(
+  {
+    origin: '*'
+  }
+))
 app.use(urlencoded({ extended: true }))
 app.use(express.json())
 
