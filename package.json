@@ -12,6 +12,7 @@
   },
   "description": "",
   "devDependencies": {
+    "@flydotio/dockerfile": "latest",
     "colors": "^1.4.0",
     "standard": "^17.1.0"
   },
