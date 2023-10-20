@@ -59,10 +59,11 @@ io.on('connection', (clientSocket) => {
 /** Iniciar el woker */
 worker.postMessage('start')
 worker.on('message', (message) => {
-  if (socket && message.message !== 'Acciones') {
+  if (socket !== null && message.message !== 'Acciones') {
     console.log('sending data to client')
     socket.emit('dataReceived', message)
-  } else {
+  }
+  if (socket && message.message === 'Acciones') {
     console.log('sending acciones to client')
     socket.emit('accionesReceived', message.data)
   }
