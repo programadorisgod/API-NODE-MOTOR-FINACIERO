@@ -30,7 +30,7 @@ const fetchDolar = async () => {
       const response = await fetch(url)
       const data = await response.json()
 
-      const dolar = data.quotes.USDCOP
+      const dolar = data?.quotes?.USDCOP
       const dataNow = {
         time: dateNow,
         value: dolar
