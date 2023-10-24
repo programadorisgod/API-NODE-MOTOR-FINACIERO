@@ -119,15 +119,21 @@ export const PostDolar = async (req, res) => {
     }
     )
     const dateDolar = dolarFormat[0].year_month_day.split('-').pop()
-    const dataSort = dolarFormat.sort()
+    const dolarCurrent = dolarFormat[0]
 
+    // console.log(dataSort)
     const dbDolar = await DOLAR.find().maxTimeMS(30000)
-    const dolarSort = dbDolar.sort()
-    const dolarLastDay = dolarSort[0].year_month_day.split('-').pop()
+    const dolarSort = dbDolar.sort((a, b) => {
+      const dateA = new Date(a.year_month_day)
+      const dateB = new Date(b.year_month_day)
+      return dateB - dateA
+    })
 
+    const dolarLastDay = dolarSort[0].year_month_day.split('-').pop()
     if (parseInt(dateDolar) > parseInt(dolarLastDay)) {
-      const dolarData = await DOLAR.create(dataSort)
+      const dolarData = await DOLAR.create(dolarCurrent)
       res.status(200).json({ dolarData })
+      return
     }
     res.status(200).json({ message: 'Dolar data already updated' })
   } catch (error) {
@@ -150,7 +156,12 @@ export const GetTip = async (req, res) => {
 export const getDolar = async (req, res) => {
   try {
     const dolarData = await DOLAR.find().maxTimeMS(30000)
-    res.status(200).json({ dolarData })
+    const dataSort = dolarData.sort((a, b) => {
+      const dateA = new Date(a.year_month_day)
+      const dateB = new Date(b.year_month_day)
+      return dateB - dateA
+    })
+    res.status(200).json({ dataSort })
   } catch (error) {
     console.log(error)
     res.status(500).json({ message: 'Error getting dolar data' })

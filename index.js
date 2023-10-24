@@ -22,25 +22,22 @@ const io = new Server(server, {
     methods: ['GET', 'POST']
   }
 })
-let socket = null
 
+let socket = null
 const disaretPort = process.env.PORT || 4000
 connectDB()
 
 app.disable('x-powered-by')
-app.use(cors(
-  {
-    origin: '*'
-  }
-))
+app.use(cors({ origin: '*' }))
 app.use(urlencoded({ extended: true }))
 app.use(express.json())
 
+/* Rutas */
 app.use(MacroRouter)
 app.use(routerMicro)
 
 app.get('/', (req, res) => {
-  res.json('Hello World!')
+  res.json({ msg: 'Hello World!' })
 })
 
 app.get('/websocket', (req, res) => {
