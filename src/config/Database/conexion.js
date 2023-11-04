@@ -1,6 +1,5 @@
 import { connect } from 'mongoose'
-import { config } from 'dotenv'
-config()
+
 export const connectDB = async () => {
   try {
     console.log('[Database] Connecting...'.magenta.bold)

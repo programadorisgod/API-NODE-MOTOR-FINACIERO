@@ -135,7 +135,7 @@ export const PostDolar = async (req, res) => {
       res.status(200).json({ dolarData })
       return
     }
-    res.status(200).json({ message: 'Dolar data already updated' })
+    res.status(403).json({ message: 'Dolar data already updated' })
   } catch (error) {
     console.log(error)
     res.status(500).json({ message: 'Error saving dolar data' })

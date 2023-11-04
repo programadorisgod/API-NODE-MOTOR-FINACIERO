@@ -1,13 +1,13 @@
 import { parentPort } from 'node:worker_threads'
-import { config } from 'dotenv'
 import * as cheerio from 'cheerio'
 import axios from 'axios'
+import { getDate } from '../../helpers/getDate.js'
 
-config()
 parentPort.on('message', async (message) => {
   if (message === 'start') {
     await fetchDolar()
     await getAcciones()
+    fetchDolarData()
   }
 })
 
@@ -17,24 +17,20 @@ parentPort.on('error', (error) => {
 
 const fetchDolar = async () => {
   try {
-    const date = new Date()
-    date.setHours(date.getHours() - 5)
-    const year = date.getFullYear()
-    const month = date.getMonth() + 1
-    const day = date.getDate()
-    const hour = date.getHours()
-    const minutes = date.getMinutes()
-    const dateNow = `${year}-${month}-${day} ${hour}:${minutes}`
     setInterval(async () => {
       const url = `http://api.currencylayer.com/live?access_key=${process.env.DOLAR_API_KEY}&currencies=COP&format=1`
       const response = await fetch(url)
       const data = await response.json()
 
+      const dateNow = getDate()
+
       const dolar = data?.quotes?.USDCOP
+
       const dataNow = {
         time: dateNow,
         value: dolar
       }
+
       parentPort.postMessage(dataNow)
     }, 60000)
   } catch (error) {
@@ -45,41 +41,67 @@ const fetchDolar = async () => {
 async function getAcciones () {
   try {
     setInterval(async () => {
-      const inputURL = 'https://es.investing.com/equities/colombia'
+      try {
+        const inputURL = 'https://es.investing.com/equities/colombia'
 
-      const response = await axios.get(inputURL)
-      const $ = cheerio.load(response.data)
-      const data = []
-      let i = 0
-      $('table tbody tr').each((_, row) => {
-        if (i <= 24) {
-          const nombre = $(row).find('td:nth-child(2) a').text()
-          const ultimo = $(row).find('td:nth-child(3)').text()
-          const maximo = $(row).find('td:nth-child(4)').text()
-          const vari = $(row).find('td:nth-child(6)').text()
-          const percentVar = $(row).find('td:nth-child(7)').text()
-          const volumen = $(row).find('td:nth-child(8)').text()
-          const hora = $(row).find('td:nth-child(9)').text()
+        const response = await axios.get(inputURL)
+        const $ = cheerio.load(response.data)
+        const data = []
+        let i = 0
 
-          const empresa = {
-            nombre,
-            datos: {
-              ultimo,
-              maximo,
-              vari,
-              percentVar,
-              volumen,
-              hora
+        $('table tbody tr').each((_, row) => {
+          if (i <= 24) {
+            const name = $(row).find('td:nth-child(2) a').text()
+            const last = $(row).find('td:nth-child(3)').text()
+            const max = $(row).find('td:nth-child(4)').text()
+            const vari = $(row).find('td:nth-child(6)').text()
+            const percentVar = $(row).find('td:nth-child(7)').text()
+            const vol = $(row).find('td:nth-child(8)').text()
+            const hour = $(row).find('td:nth-child(9)').text()
+
+            const company = {
+              name,
+              data: {
+                last,
+                max,
+                vari,
+                percentVar,
+                vol,
+                hour
+              }
             }
+
+            data.push(company)
+            i++
           }
+        })
 
-          data.push(empresa)
-          i++
-        }
-      })
-
-      parentPort.postMessage({ message: 'Acciones', data })
+        parentPort.postMessage({ message: 'Acciones', data })
+      } catch (error) {
+        console.log(error)
+      }
     }, 60000)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+function fetchDolarData () {
+  try {
+    setInterval(async () => {
+      try {
+        const response = await fetch('http://localhost:4000/API/Macro/Dolar')
+
+        if (response.status === 200) {
+          console.log('Dolar actualizado')
+        } else {
+          const data = await response.json()
+          console.log(data)
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    }, 54000000)
   } catch (error) {
     console.log(error)
   }
