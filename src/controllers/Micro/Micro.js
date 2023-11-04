@@ -55,40 +55,13 @@ export const PostMetales = async (req, res) => {
   }
 }
 
-export const PostAcciones = async (req, res) => {
+export const PostAcciones = async (acciones) => {
   try {
-    const accionesresponse = await fetch('https://mpf.fly.dev/acciones')
-    const accionesdata = await accionesresponse.json()
-    const accionesFormat = Object.entries(accionesdata).map((acciones) => {
-      const currentDate = new Date()
-      const year = currentDate.getFullYear()
-      const month = currentDate.getMonth() + 1
-      const day = currentDate.getDate()
-      const dateCurrent = `${year}-${month}-${day}`
-      return {
-        nemotecnico: acciones[0],
-        name: acciones[1].nombre,
-        code: acciones[1].codigo,
-        percentage_change: acciones[1].variacion_porcentual,
-        volumes: acciones[1].volumenes,
-        last_price: acciones[1].ultimo_precio,
-        amount: acciones[1].cantidad,
-        absolute_change: acciones[1].variacion_absoluta,
-        open_price: acciones[1].precio_apertura,
-        max_price: acciones[1].precio_maximo,
-        min_price: acciones[1].precio_minimo,
-        average_price: acciones[1].precio_promedio,
-        date: dateCurrent
-      }
-    })
-    const acciones = await Acciones.create(accionesFormat)
-    res.status(201).json(acciones)
+    await Acciones.create(acciones)
   } catch (error) {
     console.log(error)
-    res.status(500).json({ error: 'Server internal Error' })
   }
 }
-
 // Get Data
 
 export const GetMetales = async (req, res) => {
