@@ -60,7 +60,6 @@ io.on('connection', (clientSocket) => {
 worker.postMessage('start')
 
 worker.on('message', async (message) => {
-  console.log(message)
   if (socket !== null && message.message !== 'Acciones') {
     console.log('sending data to client')
     socket.emit('dataReceived', message)
