@@ -80,7 +80,7 @@ async function getActions () {
       } catch (error) {
         console.log(error, 'Error acciones')
       }
-    }, 60000)
+    }, 30 * 60 * 1000)
   } catch (error) {
     console.log(error, 'Error acciones')
   }
