@@ -1,4 +1,4 @@
-import express, { urlencoded } from 'express'
+import express, { json, urlencoded } from 'express'
 import cors from 'cors'
 
 // eslint-disable-next-line no-unused-vars
@@ -11,7 +11,7 @@ import { connectDB } from './src/config/Database/conexion.js'
 import MacroRouter from './src/routes/Macro/Macro.js'
 import routerMicro from './src/routes/Micro/Micro.js'
 import swaggerDocs from './swagger.js'
-import { PostAcciones } from './src/controllers/Micro/Micro.js'
+import { postActions } from './src/controllers/Micro/Micro.js'
 
 const worker = new Worker('./src/controllers/worker/worker.js')
 
@@ -31,7 +31,7 @@ connectDB()
 app.disable('x-powered-by')
 app.use(cors({ origin: '*' }))
 app.use(urlencoded({ extended: true }))
-app.use(express.json())
+app.use(json())
 
 /* Rutas */
 app.use(MacroRouter)
@@ -56,18 +56,17 @@ io.on('connection', (clientSocket) => {
 })
 
 /** Iniciar el woker */
-
 worker.postMessage('start')
 
 worker.on('message', async (message) => {
-  if (socket !== null && message.message !== 'Acciones') {
+  if (socket !== null && message.message !== 'Actions') {
     console.log('sending data to client')
     socket.emit('dataReceived', message)
   }
 
-  if (socket && message.message === 'Acciones') {
+  if (socket && message.message === 'Actions') {
     console.log('sending acciones to client')
-    await PostAcciones(message.data)
+    await postActions(message.data)
     socket.emit('accionesReceived', message.data)
   }
 })

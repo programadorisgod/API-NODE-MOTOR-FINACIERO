@@ -1,15 +1,15 @@
 import { Router } from 'express'
-import { GetInflation, GetPIBConst, GetPIBCurrent, GetTip, GetUnemployment, PostDesempleo, PostDolar, PostInflation, PostPibConst, PostPibCurrent, PostTip, getDolar } from '../../controllers/Macro/Macro.js'
+import { getInflation, getPIBConst, getPIBCurrent, getTip, getUnemployment, postUnemployment, postDolar, postInflation, postPibConst, postPibCurrent, postTip, getDolar } from '../../controllers/Macro/Macro.js'
 const MacroRouter = Router()
 
 const path = '/API/Macro'
 
-MacroRouter.get(`${path}/Inflacion`, PostInflation)
-MacroRouter.get(`${path}/Desempleo`, PostDesempleo)
-MacroRouter.get(`${path}/PibCorriente`, PostPibCurrent)
-MacroRouter.get(`${path}/PibConstante`, PostPibConst)
-MacroRouter.get(`${path}/Tip`, PostTip)
-MacroRouter.get(`${path}/Dolar`, PostDolar)
+MacroRouter.get(`${path}/Inflacion`, postInflation)
+MacroRouter.get(`${path}/Desempleo`, postUnemployment)
+MacroRouter.get(`${path}/PibCorriente`, postPibCurrent)
+MacroRouter.get(`${path}/PibConstante`, postPibConst)
+MacroRouter.get(`${path}/Tip`, postTip)
+MacroRouter.get(`${path}/Dolar`, postDolar)
 
 // Obtener datos
 /**
@@ -77,7 +77,7 @@ MacroRouter.get(`${path}/Dolar`, PostDolar)
  *         description: Internal Server Error
  */
 
-MacroRouter.get(`${path}/Inflacion/Colombia`, GetInflation)
+MacroRouter.get(`${path}/Inflacion/Colombia`, getInflation)
 /**
  * @swagger
  * /API/Macro/Desempleo/Colombia:
@@ -108,7 +108,7 @@ MacroRouter.get(`${path}/Inflacion/Colombia`, GetInflation)
  *         description: Error al obtener datos de desempleo
  */
 
-MacroRouter.get(`${path}/Desempleo/Colombia`, GetUnemployment)
+MacroRouter.get(`${path}/Desempleo/Colombia`, getUnemployment)
 
 /**
  * @swagger
@@ -132,7 +132,7 @@ MacroRouter.get(`${path}/Desempleo/Colombia`, GetUnemployment)
  *       500:
  *         description: Internal Server Error
  */
-MacroRouter.get(`${path}/PibCorriente/Colombia`, GetPIBCurrent)
+MacroRouter.get(`${path}/PibCorriente/Colombia`, getPIBCurrent)
 
 /**
  * @swagger
@@ -156,7 +156,7 @@ MacroRouter.get(`${path}/PibCorriente/Colombia`, GetPIBCurrent)
  *       500:
  *         description: Internal Server Error
  */
-MacroRouter.get(`${path}/PibConstante/Colombia`, GetPIBConst)
+MacroRouter.get(`${path}/PibConstante/Colombia`, getPIBConst)
 
 /**
  * @swagger
@@ -180,7 +180,7 @@ MacroRouter.get(`${path}/PibConstante/Colombia`, GetPIBConst)
  *       500:
  *         description: Error al obtener datos de la TIP
  */
-MacroRouter.get(`${path}/Tip/Colombia`, GetTip)
+MacroRouter.get(`${path}/Tip/Colombia`, getTip)
 /**
  * @swagger
  * /API/Macro/Dolar/Colombia:

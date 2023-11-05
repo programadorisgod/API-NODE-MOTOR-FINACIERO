@@ -37,6 +37,6 @@ const AccionesSchema = new Schema({
   versionKey: false
 })
 
-const Acciones = model('Acciones', AccionesSchema)
+const Actions = model('Acciones', AccionesSchema)
 
-export default Acciones
+export default Actions

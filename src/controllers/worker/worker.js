@@ -6,7 +6,7 @@ import { getDate } from '../../helpers/getDate.js'
 parentPort.on('message', async (message) => {
   if (message === 'start') {
     await fetchDolar()
-    await getAcciones()
+    await getActions()
     fetchDolarData()
   }
 })
@@ -34,11 +34,11 @@ const fetchDolar = async () => {
       parentPort.postMessage(dataNow)
     }, 60000)
   } catch (error) {
-    console.log(error)
+    console.log(error, 'error dolar')
   }
 }
 
-async function getAcciones () {
+async function getActions () {
   try {
     setInterval(async () => {
       try {
@@ -76,13 +76,13 @@ async function getAcciones () {
           }
         })
 
-        parentPort.postMessage({ message: 'Acciones', data })
+        parentPort.postMessage({ message: 'Actions', data })
       } catch (error) {
-        console.log(error)
+        console.log(error, 'Error acciones')
       }
-    }, 60000)
+    }, 72000000)
   } catch (error) {
-    console.log(error)
+    console.log(error, 'Error acciones')
   }
 }
 
@@ -99,10 +99,10 @@ function fetchDolarData () {
           console.log(data)
         }
       } catch (error) {
-        console.log(error)
+        console.log(error, 'Error dolar actualizar')
       }
     }, 54000000)
   } catch (error) {
-    console.log(error)
+    console.log(error, 'Error dolar actualizar')
   }
 }

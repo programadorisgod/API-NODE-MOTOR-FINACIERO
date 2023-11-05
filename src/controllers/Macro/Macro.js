@@ -5,7 +5,7 @@ import PIBCONST from '../../Data/models/MacroEconomic/pibConstante.js'
 import Tip from '../../Data/models/MacroEconomic/tip.js'
 import DOLAR from '../../Data/models/MacroEconomic/dolar.js'
 
-export const PostInflation = async (req, res) => {
+export const postInflation = async (req, res) => {
   try {
     const inflation = await fetch('https://mpf.fly.dev/inflacion')
     const inflationJson = await inflation.json()
@@ -27,7 +27,7 @@ export const PostInflation = async (req, res) => {
   }
 }
 
-export const PostDesempleo = async (req, res) => {
+export const postUnemployment = async (req, res) => {
   try {
     const unemployment = await fetch('https://mpf.fly.dev/desempleo')
     const unemploymentJson = await unemployment.json()
@@ -47,7 +47,7 @@ export const PostDesempleo = async (req, res) => {
   }
 }
 
-export const PostPibCurrent = async (req, res) => {
+export const postPibCurrent = async (req, res) => {
   try {
     const pibCurrent = await fetch('https://mpf.fly.dev/pib_corrientes')
     const pibCurrentJson = await pibCurrent.json()
@@ -67,7 +67,7 @@ export const PostPibCurrent = async (req, res) => {
   }
 }
 
-export const PostPibConst = async (req, res) => {
+export const postPibConst = async (req, res) => {
   try {
     const pibConst = await fetch('https://mpf.fly.dev/pib_constantes')
     const pibCurrentJson = await pibConst.json()
@@ -87,7 +87,7 @@ export const PostPibConst = async (req, res) => {
   }
 }
 
-export const PostTip = async (req, res) => {
+export const postTip = async (req, res) => {
   try {
     const tip = await fetch('https://mpf.fly.dev/tip')
     const tipJson = await tip.json()
@@ -107,10 +107,11 @@ export const PostTip = async (req, res) => {
   }
 }
 
-export const PostDolar = async (req, res) => {
+export const postDolar = async (req, res) => {
   try {
     const dolar = await fetch('https://mpf.fly.dev/dolar')
     const dolarJson = await dolar.json()
+
     const dolarFormat = Object.entries(dolarJson).map((dolar) => {
       return {
         year_month_day: dolar[0],
@@ -121,15 +122,17 @@ export const PostDolar = async (req, res) => {
     const dateDolar = dolarFormat[0].year_month_day.split('-').pop()
     const dolarCurrent = dolarFormat[0]
 
-    // console.log(dataSort)
     const dbDolar = await DOLAR.find().maxTimeMS(30000)
+
     const dolarSort = dbDolar.sort((a, b) => {
       const dateA = new Date(a.year_month_day)
       const dateB = new Date(b.year_month_day)
+
       return dateB - dateA
     })
 
     const dolarLastDay = dolarSort[0].year_month_day.split('-').pop()
+
     if (parseInt(dateDolar) > parseInt(dolarLastDay)) {
       const dolarData = await DOLAR.create(dolarCurrent)
       res.status(200).json({ dolarData })
@@ -143,7 +146,7 @@ export const PostDolar = async (req, res) => {
 }
 
 // Get Data
-export const GetTip = async (req, res) => {
+export const getTip = async (req, res) => {
   try {
     const tipData = await Tip.find().maxTimeMS(30000)
 
@@ -168,7 +171,7 @@ export const getDolar = async (req, res) => {
   }
 }
 
-export const GetPIBCurrent = async (req, res) => {
+export const getPIBCurrent = async (req, res) => {
   try {
     const pibCurrentData = await PIBCURRENT.find()
 
@@ -178,7 +181,7 @@ export const GetPIBCurrent = async (req, res) => {
   }
 }
 
-export const GetPIBConst = async (req, res) => {
+export const getPIBConst = async (req, res) => {
   try {
     const pibConstData = await PIBCONST.find().maxTimeMS(30000)
 
@@ -188,7 +191,7 @@ export const GetPIBConst = async (req, res) => {
   }
 }
 
-export const GetUnemployment = async (req, res) => {
+export const getUnemployment = async (req, res) => {
   try {
     const unemploymentData = await Unemployment.find().maxTimeMS(30000)
 
@@ -197,7 +200,7 @@ export const GetUnemployment = async (req, res) => {
     res.status(500).json({ message: 'Error getting unemployment data' })
   }
 }
-export const GetInflation = async (req, res) => {
+export const getInflation = async (req, res) => {
   try {
     const inflationData = await Inflation.find().maxTimeMS(30000)
 

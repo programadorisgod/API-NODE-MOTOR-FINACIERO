@@ -20,6 +20,6 @@ const metalesSchema = new Schema({
   versionKey: false
 })
 
-const Metales = model('Metal', metalesSchema)
+const Metals = model('Metal', metalesSchema)
 
-export default Metales
+export default Metals

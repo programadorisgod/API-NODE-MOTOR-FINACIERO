@@ -1,11 +1,12 @@
-import Acciones from '../../Data/models/MicroEconomic/acciones.js'
+import Actions from '../../Data/models/MicroEconomic/acciones.js'
 import Ipc from '../../Data/models/MicroEconomic/ipc.js'
-import Metales from '../../Data/models/MicroEconomic/metales.js'
+import Metals from '../../Data/models/MicroEconomic/metales.js'
 
-export const PostIpc = async (req, res) => {
+export const postIpc = async (req, res) => {
   try {
     const ipcresponse = await fetch('https://mpf.fly.dev/ipc')
     const ipcdata = await ipcresponse.json()
+
     const ipcformtat = Object.entries(ipcdata).map((ipc) => {
       return {
 
@@ -25,64 +26,77 @@ export const PostIpc = async (req, res) => {
   }
 }
 
-export const PostMetales = async (req, res) => {
+export const postMetals = async (req, res) => {
   try {
-    const metalesresponse = await fetch('https://mpf.fly.dev/metales')
-    const metalesdata = await metalesresponse.json()
+    const metalsresponse = await fetch('https://mpf.fly.dev/metales')
+    const metalsdata = await metalsresponse.json()
 
-    const metalesformtat = Object.entries(metalesdata).map((metales) => {
+    const metalsformtat = Object.entries(metalsdata).map((metals) => {
       return {
-        date: metales[0],
+        date: metals[0],
         gold: {
-          purchase_price: metales[1].oro.compra,
-          sales_price: metales[1].oro.venta
+          purchase_price: metals[1].oro.compra,
+          sales_price: metals[1].oro.venta
         },
         silver: {
-          purchase_price: metales[1].plata.compra,
-          sales_price: metales[1].plata.venta
+          purchase_price: metals[1].plata.compra,
+          sales_price: metals[1].plata.venta
         },
         platinum: {
-          purchase_price: metales[1].platino.compra,
-          sales_price: metales[1].platino.venta
+          purchase_price: metals[1].platino.compra,
+          sales_price: metals[1].platino.venta
         }
 
       }
     })
-    const metales = await Metales.create(metalesformtat)
-    res.status(201).json(metales)
+    const metals = await Metals.create(metalsformtat)
+    res.status(201).json(metals)
   } catch (error) {
     res.status(500).json({ error: 'Server internal Error' })
   }
 }
 
-export const PostAcciones = async (acciones) => {
+export const postActions = async (acciones) => {
   try {
-    await Acciones.create(acciones)
+    await Actions.create(acciones)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const getAcctionsByName = async (req, res) => {
+  const { name } = req.params
+  try {
+    const action = await Actions.find({ name })
+    console.log(action)
+
+    if (action) {
+      res.status(200).json({ data: action })
+    }
   } catch (error) {
     console.log(error)
   }
 }
 // Get Data
-
-export const GetMetales = async (req, res) => {
+export const getMetals = async (req, res) => {
   try {
-    const metales = await Metales.find().maxTimeMS(30000)
+    const metales = await Metals.find().maxTimeMS(30000)
     res.status(200).json(metales)
   } catch (error) {
     res.status(500).json({ error: 'Server internal Error' })
   }
 }
 
-export const GetAcciones = async (req, res) => {
+export const getActions = async (req, res) => {
   try {
-    const acciones = await Acciones.find().maxTimeMS(30000)
+    const acciones = await Actions.find().maxTimeMS(30000)
     res.status(200).json(acciones)
   } catch (error) {
     res.status(500).json({ error: 'Server internal Error' })
   }
 }
 
-export const GetIpc = async (req, res) => {
+export const getIpc = async (req, res) => {
   try {
     const ipc = await Ipc.find().maxTimeMS(30000)
     res.status(200).json(ipc)
