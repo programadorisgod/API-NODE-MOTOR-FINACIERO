@@ -56,9 +56,19 @@ export const postMetals = async (req, res) => {
   }
 }
 
-export const postActions = async (acciones) => {
+export const postActions = async (actions) => {
   try {
-    await Actions.create(acciones)
+    const actionsDB = await Actions.find().maxTimeMS(60000)
+
+    for (let index = 0; index < actionsDB.length; index++) {
+      const element = actionsDB[index]
+      const action = actions[index]
+
+      if (element.name === action.name && element?.data?.last !== action?.data?.last) {
+        await Actions.create(action)
+        console.log('Holas', element?.data?.last, action?.data?.last)
+      }
+    }
   } catch (error) {
     console.log(error)
   }
