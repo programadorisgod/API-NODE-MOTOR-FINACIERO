@@ -6,7 +6,6 @@ const path = '/API/Micro'
 
 routerMicro.get(`${path}/ipc`, postIpc)
 routerMicro.get(`${path}/metales`, postMetals)
-routerMicro.get(`${path}/acciones/:name`, getAcctionsByName)
 
 // Get Data
 /**
@@ -72,4 +71,6 @@ routerMicro.get(`${path}/metales/Colombia`, getMetals)
  *         description: Error al obtener datos de acciones de empresas
  */
 routerMicro.get(`${path}/acciones/Empresas`, getActions)
+
+routerMicro.get(`${path}/acciones/:name`, getAcctionsByName)
 export default routerMicro
