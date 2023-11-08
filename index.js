@@ -11,7 +11,6 @@ import { connectDB } from './src/config/Database/conexion.js'
 import MacroRouter from './src/routes/Macro/Macro.js'
 import routerMicro from './src/routes/Micro/Micro.js'
 import swaggerDocs from './swagger.js'
-import { postActions } from './src/controllers/Micro/Micro.js'
 
 const worker = new Worker('./src/controllers/worker/worker.js')
 
@@ -67,8 +66,6 @@ worker.on('message', async (message) => {
 
   if (socket && message.message === 'Actions') {
     console.log('sending acciones to client')
-
-    await postActions(message.data)
     socket.emit('accionesReceived', message.data)
   }
 })

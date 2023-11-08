@@ -2,6 +2,10 @@ import { parentPort } from 'node:worker_threads'
 import * as cheerio from 'cheerio'
 import axios from 'axios'
 import { getDate } from '../../helpers/getDate.js'
+import { postActions } from '../Micro/Micro.js'
+import cron from 'node-cron'
+
+let actions = []
 
 parentPort.on('message', async (message) => {
   if (message === 'start') {
@@ -75,12 +79,13 @@ async function getActions () {
             i++
           }
         })
-
+        actions = data
+        console.log('Acciones actualizadas')
         parentPort.postMessage({ message: 'Actions', data })
       } catch (error) {
         console.log(error, 'Error acciones')
       }
-    }, 30 * 60 * 1000)
+    }, 30000)
   } catch (error) {
     console.log(error, 'Error acciones')
   }
@@ -90,7 +95,7 @@ function fetchDolarData () {
   try {
     setInterval(async () => {
       try {
-        const response = await fetch('http://localhost:4000/API/Macro/Dolar')
+        const response = await fetch('https://api-node-motor-finaciero-production.up.railway.app/API/Macro/Dolar')
 
         if (response.status === 200) {
           console.log('Dolar actualizado')
@@ -106,3 +111,7 @@ function fetchDolarData () {
     console.log(error, 'Error dolar actualizar')
   }
 }
+
+cron.schedule('0 10 * * *', async () => {
+  await postActions(actions)
+})

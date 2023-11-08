@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { getIpc, getMetals, postIpc, postMetals, getAcctionsByName, getActions } from '../../controllers/Micro/Micro.js'
+import { getIpc, getMetals, postIpc, postMetals, getAcctionsByName, getActions, postActions } from '../../controllers/Micro/Micro.js'
 const routerMicro = new Router()
 
 const path = '/API/Micro'
@@ -71,6 +71,8 @@ routerMicro.get(`${path}/metales/Colombia`, getMetals)
  *         description: Error al obtener datos de acciones de empresas
  */
 routerMicro.get(`${path}/acciones/Empresas`, getActions)
+
+routerMicro.get(`${path}/acciones/`, postActions)
 
 routerMicro.get(`${path}/acciones/:name`, getAcctionsByName)
 export default routerMicro
