@@ -4,6 +4,7 @@ import PIBCURRENT from '../../Data/models/MacroEconomic/pibcorrientes.js'
 import PIBCONST from '../../Data/models/MacroEconomic/pibConstante.js'
 import Tip from '../../Data/models/MacroEconomic/tip.js'
 import DOLAR from '../../Data/models/MacroEconomic/dolar.js'
+import { getDate } from '../../helpers/getDate.js'
 
 export const postInflation = async (req, res) => {
   try {
@@ -112,13 +113,23 @@ export const postDolar = async (req, res) => {
     const dolar = await fetch('https://mpf.fly.dev/dolar')
     const dolarJson = await dolar.json()
 
-    const dolarFormat = Object.entries(dolarJson).map((dolar) => {
+    const dolarFormat = Object.entries(dolarJson).filter((dolar) => {
+      const date = getDate()
+      const day = date.split(' ')[0].split('-')[2]
+
+      const dolarDate = dolar[1].vigenciahasta.split('T')
+      const dayDolar = dolarDate[0].split('-')[2]
+
+      if (parseInt(dayDolar) > parseInt(day)) {
+        return false
+      }
+      return true
+    }).map((dolar) => {
       return {
         year_month_day: dolar[0],
         dolar: dolar[1].valor
       }
-    }
-    )
+    })
 
     await DOLAR.deleteMany().maxTimeMS(60000)
 
