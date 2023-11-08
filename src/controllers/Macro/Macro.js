@@ -115,30 +115,16 @@ export const postDolar = async (req, res) => {
     const dolarFormat = Object.entries(dolarJson).map((dolar) => {
       return {
         year_month_day: dolar[0],
-        dolar: dolar[1]
+        dolar: dolar[1].valor
       }
     }
     )
-    const dateDolar = dolarFormat[0].year_month_day.split('-').pop()
-    const dolarCurrent = dolarFormat[0]
 
-    const dbDolar = await DOLAR.find().maxTimeMS(30000)
+    await DOLAR.deleteMany().maxTimeMS(60000)
 
-    const dolarSort = dbDolar.sort((a, b) => {
-      const dateA = new Date(a.year_month_day)
-      const dateB = new Date(b.year_month_day)
+    const dolarData = await DOLAR.create(dolarFormat)
 
-      return dateB - dateA
-    })
-
-    const dolarLastDay = dolarSort[0].year_month_day.split('-').pop()
-
-    if (parseInt(dateDolar) > parseInt(dolarLastDay)) {
-      const dolarData = await DOLAR.create(dolarCurrent)
-      res.status(200).json({ dolarData })
-      return
-    }
-    res.status(403).json({ message: 'Dolar data already updated' })
+    res.status(200).json({ dolarData })
   } catch (error) {
     console.log(error)
     res.status(500).json({ message: 'Error saving dolar data' })
