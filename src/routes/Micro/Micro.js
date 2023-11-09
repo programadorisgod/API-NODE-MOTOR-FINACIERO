@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import { getIpc, getMetals, postIpc, postMetals, getAcctionsByName, getActions, postActions } from '../../controllers/Micro/Micro.js'
-const routerMicro = new Router()
+const routerMicro = Router()
 
 const path = '/API/Micro'
 
