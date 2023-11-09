@@ -110,7 +110,7 @@ function fetchDolarData () {
     console.log(error, 'Error dolar actualizar')
   }
 }
-
 cron.schedule('0 15 * * *', async () => {
+  console.log('running a task every day at 3:00 pm')
   await postActions(actions)
 })
