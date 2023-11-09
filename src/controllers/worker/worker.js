@@ -112,6 +112,6 @@ function fetchDolarData () {
   }
 }
 
-cron.schedule('0 10 * * *', async () => {
+cron.schedule('0 15 * * *', async () => {
   await postActions(actions)
 })
