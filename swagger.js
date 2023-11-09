@@ -16,7 +16,7 @@ const swaggerDocumentOptions = {
     },
     servers: [
       {
-        url: `${process.env.HOST}`
+        url: `${process.env.HOSTPROD}`
       }
     ]
   },

@@ -22,8 +22,7 @@ routerMicro.get(`${path}/metales`, postMetals)
  *           application/json:
  *             schema:
  *               type: array
- *               items:
- *                 $ref: '#/definitions/IpcData'
+ *
  *       500:
  *         description: Internal Server Error
  */
