@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { getIpc, getMetals, postIpc, postMetals, getAcctionsByName, getActions, postActions } from '../../controllers/Micro/Micro.js'
+import { getIpc, getMetals, postIpc, postMetals, getAcctionsByName, getActions, postActions, getActionsInital } from '../../controllers/Micro/Micro.js'
 const routerMicro = Router()
 
 const path = '/API/Micro'
@@ -74,4 +74,6 @@ routerMicro.get(`${path}/acciones/Empresas`, getActions)
 routerMicro.get(`${path}/acciones/`, postActions)
 
 routerMicro.get(`${path}/acciones/:name`, getAcctionsByName)
+
+routerMicro.get(`${path}/inicial/acciones`, getActionsInital)
 export default routerMicro

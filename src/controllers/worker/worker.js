@@ -3,14 +3,15 @@ import * as cheerio from 'cheerio'
 import axios from 'axios'
 import { getDate } from '../../helpers/getDate.js'
 import { postActions } from '../Micro/Micro.js'
-import cron from 'node-cron'
 
 let actions = []
-
+const hour = 18
+const miliseconds = hour * 60 * 60 * 1000
 parentPort.on('message', async (message) => {
   if (message === 'start') {
     await fetchDolar()
     await getActions()
+    await postActionsData()
     fetchDolarData()
   }
 })
@@ -80,11 +81,12 @@ async function getActions () {
           }
         })
         actions = data
+        console.log(data)
         parentPort.postMessage({ message: 'Actions', data })
       } catch (error) {
         console.log(error, 'Error acciones')
       }
-    }, 30000)
+    }, 5 * 60 * 1000)
   } catch (error) {
     console.log(error, 'Error acciones')
   }
@@ -110,7 +112,12 @@ function fetchDolarData () {
     console.log(error, 'Error dolar actualizar')
   }
 }
-cron.schedule('0 15 * * *', async () => {
-  console.log('running a task every day at 3:00 pm')
-  await postActions(actions)
-})
+async function postActionsData () {
+  try {
+    setInterval(async () => {
+      await postActions(actions)
+    }, miliseconds)
+  } catch (error) {
+
+  }
+}

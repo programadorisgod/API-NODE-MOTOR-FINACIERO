@@ -118,13 +118,21 @@ export const postDolar = async (req, res) => {
       const day = date.split(' ')[0].split('-')[2]
 
       const dolarDate = dolar[1].vigenciahasta.split('T')
+      const dolarVigence = dolar[1].vigenciadesde.split('T')
       const dayDolar = dolarDate[0].split('-')[2]
+      const dayVigence = dolarVigence[0].split('-')[2]
+
+      if (parseInt(dayVigence) < parseInt(day)) {
+        return true
+      }
 
       if (parseInt(dayDolar) > parseInt(day)) {
         return false
       }
+
       return true
     }).map((dolar) => {
+      console.log(dolar[0])
       return {
         year_month_day: dolar[0],
         dolar: dolar[1].valor
