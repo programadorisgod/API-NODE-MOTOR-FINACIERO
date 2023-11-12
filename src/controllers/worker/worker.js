@@ -81,7 +81,6 @@ async function getActions () {
           }
         })
         actions = data
-        console.log(data)
         parentPort.postMessage({ message: 'Actions', data })
       } catch (error) {
         console.log(error, 'Error acciones')
