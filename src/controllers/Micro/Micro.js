@@ -141,7 +141,6 @@ export const getActionsInital = async (req, res) => {
         }
 
         data.push(company)
-        console.log(data)
         i++
       }
     })
