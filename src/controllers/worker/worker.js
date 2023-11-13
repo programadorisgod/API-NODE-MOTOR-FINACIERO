@@ -114,6 +114,7 @@ function fetchDolarData () {
 async function postActionsData () {
   try {
     setInterval(async () => {
+      console.log('posting actions')
       await postActions(actions)
     }, miliseconds)
   } catch (error) {
