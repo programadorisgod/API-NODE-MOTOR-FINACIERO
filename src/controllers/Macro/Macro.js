@@ -132,7 +132,6 @@ export const postDolar = async (req, res) => {
 
       return true
     }).map((dolar) => {
-      console.log(dolar[0])
       return {
         year_month_day: dolar[0],
         dolar: dolar[1].valor

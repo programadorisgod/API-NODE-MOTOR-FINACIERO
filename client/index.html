@@ -38,7 +38,7 @@
      })
 
      socket.on('dataReceived', (msg) => {
-      console.log(msg)
+      //console.log(msg)
       const item = document.createElement('li')
       item.textContent = `time:${msg.time}\n value: ${msg.value}`;
       messages.appendChild(item)

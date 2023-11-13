@@ -46,7 +46,7 @@ app.get('/websocket', (req, res) => {
 
 io.on('connection', (clientSocket) => {
   socket = clientSocket
-  console.log('a user connected')
+  // console.log('a user connected')
 
   clientSocket.on('disconnect', () => {
     console.log('user disconnected')
@@ -59,13 +59,13 @@ worker.postMessage('start')
 
 worker.on('message', async (message) => {
   if (socket !== null && message.message !== 'Actions') {
-    console.log('sending data to client')
+  //  console.log('sending data to client')
 
     socket.emit('dataReceived', message)
   }
 
   if (socket && message.message === 'Actions') {
-    console.log('sending acciones to client')
+  //  console.log('sending acciones to client')
     socket.emit('accionesReceived', message.data)
   }
 })

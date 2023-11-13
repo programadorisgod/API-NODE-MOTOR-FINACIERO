@@ -113,7 +113,6 @@ export const getActionsInital = async (req, res) => {
     const inputURL = 'https://es.investing.com/equities/colombia'
     const response = await axios.get(inputURL)
     const $ = cheerio.load(response.data)
-    console.log(response.data)
 
     const data = []
     let i = 0
