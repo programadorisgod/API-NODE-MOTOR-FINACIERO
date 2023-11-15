@@ -33,33 +33,36 @@ export const postMetals = async (req, res) => {
   try {
     const metalsresponse = await fetch('https://mpf.fly.dev/metales')
     const metalsdata = await metalsresponse.json()
-
     const metalsformtat = Object.entries(metalsdata).map((metals) => {
+      const date = metals[1][0]
+      const metalsInfo = metals[1][1]
+
       return {
-        date: metals[0],
+        date,
         gold: {
-          purchase_price: metals[1].oro.compra,
-          sales_price: metals[1].oro.venta
+          purchase_price: metalsInfo.oro.compra,
+          sales_price: metalsInfo.oro.venta
         },
         silver: {
-          purchase_price: metals[1].plata.compra,
-          sales_price: metals[1].plata.venta
+          purchase_price: metalsInfo.plata.compra,
+          sales_price: metalsInfo.plata.venta
         },
         platinum: {
-          purchase_price: metals[1].platino.compra,
-          sales_price: metals[1].platino.venta
+          purchase_price: metalsInfo.platino.compra,
+          sales_price: metalsInfo.platino.venta
         }
-
       }
     })
     const metals = await Metals.create(metalsformtat)
     res.status(201).json(metals)
   } catch (error) {
+    console.log(error)
     res.status(500).json({ error: 'Server internal Error' })
   }
 }
 
-export const postActions = async (actions) => {
+export const postActions = async (req, res) => {
+  const actions = req.body
   try {
     await Actions.create(actions)
   } catch (error) {

@@ -1,5 +1,6 @@
 import { Router } from 'express'
 import { getInflation, getPIBConst, getPIBCurrent, getTip, getUnemployment, postUnemployment, postDolar, postInflation, postPibConst, postPibCurrent, postTip, getDolar } from '../../controllers/Macro/Macro.js'
+
 const MacroRouter = Router()
 
 const path = '/API/Macro'

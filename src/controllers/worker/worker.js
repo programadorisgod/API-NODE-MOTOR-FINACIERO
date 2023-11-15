@@ -2,11 +2,7 @@ import { parentPort } from 'node:worker_threads'
 import * as cheerio from 'cheerio'
 import axios from 'axios'
 import { getDate } from '../../helpers/getDate.js'
-import { postActions } from '../Micro/Micro.js'
 
-let actions = []
-const hour = 18
-const miliseconds = hour * 60 * 60 * 1000
 parentPort.on('message', async (message) => {
   if (message === 'start') {
     await fetchDolar()
@@ -80,12 +76,66 @@ async function getActions () {
             i++
           }
         })
-        actions = data
+
         parentPort.postMessage({ message: 'Actions', data })
       } catch (error) {
         console.log(error, 'Error acciones')
       }
-    }, 5 * 60 * 1000)
+    }, 60000)
+  } catch (error) {
+    console.log(error, 'Error acciones')
+  }
+}
+
+async function postActionsData () {
+  try {
+    setInterval(async () => {
+      try {
+        const inputURL = 'https://es.investing.com/equities/colombia'
+
+        const response = await axios.get(inputURL)
+        const $ = cheerio.load(response.data)
+        const data = []
+        let i = 0
+
+        $('table tbody tr').each((_, row) => {
+          if (i <= 24) {
+            const name = $(row).find('td:nth-child(2) a').text()
+            const last = $(row).find('td:nth-child(3)').text()
+            const max = $(row).find('td:nth-child(4)').text()
+            const vari = $(row).find('td:nth-child(6)').text()
+            const percentVar = $(row).find('td:nth-child(7)').text()
+            const vol = $(row).find('td:nth-child(8)').text()
+            const hour = $(row).find('td:nth-child(9)').text()
+
+            const company = {
+              name,
+              data: {
+                last,
+                max,
+                vari,
+                percentVar,
+                vol,
+                hour
+              }
+            }
+
+            data.push(company)
+            i++
+          }
+        })
+
+        await fetch('https://api-node-motor-finaciero-production.up.railway.app/API/Micro/postActions', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        })
+      } catch (error) {
+        console.log(error, 'Error acciones')
+      }
+    }, 18 * 60 * 60 * 1000)
   } catch (error) {
     console.log(error, 'Error acciones')
   }
@@ -109,15 +159,5 @@ function fetchDolarData () {
     }, 54000000)
   } catch (error) {
     console.log(error, 'Error dolar actualizar')
-  }
-}
-async function postActionsData () {
-  try {
-    setInterval(async () => {
-      console.log('posting actions')
-      await postActions(actions)
-    }, miliseconds)
-  } catch (error) {
-
   }
 }

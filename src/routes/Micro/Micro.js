@@ -71,9 +71,9 @@ routerMicro.get(`${path}/metales/Colombia`, getMetals)
  */
 routerMicro.get(`${path}/acciones/Empresas`, getActions)
 
-routerMicro.get(`${path}/acciones/`, postActions)
-
 routerMicro.get(`${path}/acciones/:name`, getAcctionsByName)
 
 routerMicro.get(`${path}/inicial/acciones`, getActionsInital)
+
+routerMicro.post(`${path}/postActions`, postActions)
 export default routerMicro

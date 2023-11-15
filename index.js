@@ -58,8 +58,6 @@ worker.postMessage('start')
 
 worker.on('message', async (message) => {
   if (socket !== null && message.message !== 'Actions') {
-    console.log('sending data to client')
-
     socket.emit('dataReceived', message)
   }
 
