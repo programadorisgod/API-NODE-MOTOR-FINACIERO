@@ -49,7 +49,6 @@ io.on('connection', (clientSocket) => {
   // console.log('a user connected')
 
   clientSocket.on('disconnect', () => {
-    console.log('user disconnected')
     socket = null
   })
 })
@@ -59,7 +58,7 @@ worker.postMessage('start')
 
 worker.on('message', async (message) => {
   if (socket !== null && message.message !== 'Actions') {
-  //  console.log('sending data to client')
+    console.log('sending data to client')
 
     socket.emit('dataReceived', message)
   }
