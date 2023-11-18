@@ -64,7 +64,30 @@ export const postMetals = async (req, res) => {
 export const postActions = async (req, res) => {
   const actions = req.body
   try {
-    await Actions.create(actions)
+    const date = new Date()
+    let day = date.getDate()
+    if (day.length === 1) {
+      day = `0${day}`
+    }
+    const month = date.getMonth() + 1
+
+    const hourAction = `${day}/${month}`
+    actions.map(async (action) => {
+      const { name, data } = action
+      const { last, max, vari, percentVar, vol } = data
+      const actionDB = {
+        name,
+        data: {
+          last,
+          max,
+          vari,
+          percentVar,
+          vol,
+          hour: hourAction
+        }
+      }
+      await Actions.create(actionDB)
+    })
   } catch (error) {
     console.log(error)
   }
