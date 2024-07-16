@@ -5,6 +5,8 @@ import swaggerUi from 'swagger-ui-express'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+console.log(__dirname, 'dirname');
 
 const swaggerDocumentOptions = {
   definition: {
@@ -21,8 +23,8 @@ const swaggerDocumentOptions = {
     // ]
   },
   apis: [
-    `${path.join(__filename, '../src/routes/Macro/*.js')}`,
-    `${path.join(__filename, '../src/routes/Micro/*.js')}`
+    `${path.join(__dirname, 'src/routes/Macro/*.js')}`,
+    `${path.join(__dirname, 'src/routes/Micro/*.js')}`
   ]
 }
 const swaggerDocs = (app, port) => {

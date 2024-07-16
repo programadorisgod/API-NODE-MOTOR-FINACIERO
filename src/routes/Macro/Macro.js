@@ -3,7 +3,7 @@ import { getInflation, getPIBConst, getPIBCurrent, getTip, getUnemployment, post
 
 const MacroRouter = Router()
 
-const path = '/api/micro/colombia'
+const path = '/api/macro/colombia'
 
 MacroRouter.get(`${path}/save/inflacion`, postInflation)
 MacroRouter.get(`${path}/save/desempleo`, postUnemployment)
@@ -74,7 +74,7 @@ export default MacroRouter
 
 /**
  * @swagger
- * /api/micro/colombia/desempleo:
+ * /api/macro/colombia/desempleo:
  *   get:
  *     tags:
  *       - Macro
@@ -105,7 +105,7 @@ export default MacroRouter
 
 /**
  * @swagger
- * /api/micro/colombia/inflacion:
+ * /api/macro/colombia/inflacion:
  *   get:
  *     tags:
  *       - Macro
@@ -130,7 +130,7 @@ export default MacroRouter
 
 /**
  * @swagger
- * /api/micro/colombia/pib/corriente:
+ * /api/macro/colombia/pib/corriente:
  *   get:
  *     tags:
  *       - Macro
@@ -153,7 +153,7 @@ export default MacroRouter
 
 /**
  * @swagger
- * /api/micro/colombia/pib/constante:
+ * /api/macro/colombia/pib/constante:
  *   get:
  *     tags:
  *       - Macro
@@ -177,7 +177,7 @@ export default MacroRouter
 
 /**
  * @swagger
- * /api/micro/colombia/tip:
+ * /api/macro/colombia/tip:
  *   get:
  *     tags:
  *       - Macro
@@ -200,7 +200,7 @@ export default MacroRouter
 
 /**
  * @swagger
- * /api/micro/colombia/dolar:
+ * /api/macro/colombia/dolar:
  *   get:
  *     tags:
  *       - Macro
