@@ -4,7 +4,7 @@ import swaggerJSDoc from 'swagger-jsdoc'
 import swaggerUi from 'swagger-ui-express'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
-const __dirname = fileURLToPath(import.meta.url)
+const __filename = fileURLToPath(import.meta.url)
 
 const swaggerDocumentOptions = {
   definition: {
@@ -14,15 +14,15 @@ const swaggerDocumentOptions = {
       version: '1.0.0',
       description: 'API Microservicio'
     },
-    servers: [
-      {
-        url: `${process.env.HOSTPROD}`
-      }
-    ]
+    // servers: [
+    //   {
+    //     url: `${process.env.HOSTPROD}`
+    //   }
+    // ]
   },
   apis: [
-    `${path.join(__dirname, '../src/routes/Macro/*.js')}`,
-   `${path.join(__dirname, '../src/routes/Micro/*.js')}`
+    `${path.join(__filename, '../src/routes/Macro/*.js')}`,
+    `${path.join(__filename, '../src/routes/Micro/*.js')}`
   ]
 }
 const swaggerDocs = (app, port) => {

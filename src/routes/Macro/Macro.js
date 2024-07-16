@@ -3,16 +3,34 @@ import { getInflation, getPIBConst, getPIBCurrent, getTip, getUnemployment, post
 
 const MacroRouter = Router()
 
-const path = '/API/Macro'
+const path = '/api/micro/colombia'
 
-MacroRouter.get(`${path}/Inflacion`, postInflation)
-MacroRouter.get(`${path}/Desempleo`, postUnemployment)
-MacroRouter.get(`${path}/PibCorriente`, postPibCurrent)
-MacroRouter.get(`${path}/PibConstante`, postPibConst)
-MacroRouter.get(`${path}/Tip`, postTip)
-MacroRouter.get(`${path}/Dolar`, postDolar)
+MacroRouter.get(`${path}/save/inflacion`, postInflation)
+MacroRouter.get(`${path}/save/desempleo`, postUnemployment)
+MacroRouter.get(`${path}/save/pib/corriente`, postPibCurrent)
+MacroRouter.get(`${path}/save/pib/constante`, postPibConst)
+MacroRouter.get(`${path}/save/tip`, postTip)
+MacroRouter.get(`${path}/save/dolar`, postDolar)
 
 // Obtener datos
+
+
+MacroRouter.get(`${path}/inflacion`, getInflation)
+
+
+MacroRouter.get(`${path}/desempleo`, getUnemployment)
+
+
+MacroRouter.get(`${path}/pib/corriente`, getPIBCurrent)
+
+
+MacroRouter.get(`${path}/pib/constante`, getPIBConst)
+
+MacroRouter.get(`${path}/tip`, getTip)
+
+MacroRouter.get(`${path}/dolar`, getDolar)
+
+export default MacroRouter
 /**
  * @swagger
  * definitions:
@@ -53,35 +71,10 @@ MacroRouter.get(`${path}/Dolar`, postDolar)
  *         type: number
  *         description: Valor del dólar en pesos colombianos
  */
-/**
- * @swagger
- * /API/Macro/Inflacion/Colombia:
- *   get:
- *     tags:
- *       - Macro
- *     summary: Obtener datos de inflación para Colombia
- *     responses:
- *       200:
- *         description: Respuesta exitosa
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 year_month:
- *                   type: string
- *                   description: Año y mes de la inflación en formato YYYY-MM
- *                 inflation:
- *                   type: number
- *                   description: Tasa de inflación en porcentaje
- *       500:
- *         description: Internal Server Error
- */
 
-MacroRouter.get(`${path}/Inflacion/Colombia`, getInflation)
 /**
  * @swagger
- * /API/Macro/Desempleo/Colombia:
+ * /api/micro/colombia/desempleo:
  *   get:
  *     tags:
  *       - Macro
@@ -109,11 +102,35 @@ MacroRouter.get(`${path}/Inflacion/Colombia`, getInflation)
  *         description: Error al obtener datos de desempleo
  */
 
-MacroRouter.get(`${path}/Desempleo/Colombia`, getUnemployment)
 
 /**
  * @swagger
- * /API/Macro/PibCorriente/Colombia:
+ * /api/micro/colombia/inflacion:
+ *   get:
+ *     tags:
+ *       - Macro
+ *     summary: Obtener datos de inflación para Colombia
+ *     responses:
+ *       200:
+ *         description: Respuesta exitosa
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 year_month:
+ *                   type: string
+ *                   description: Año y mes de la inflación en formato YYYY-MM
+ *                 inflation:
+ *                   type: number
+ *                   description: Tasa de inflación en porcentaje
+ *       500:
+ *         description: Internal Server Error
+ */
+
+/**
+ * @swagger
+ * /api/micro/colombia/pib/corriente:
  *   get:
  *     tags:
  *       - Macro
@@ -133,11 +150,10 @@ MacroRouter.get(`${path}/Desempleo/Colombia`, getUnemployment)
  *       500:
  *         description: Internal Server Error
  */
-MacroRouter.get(`${path}/PibCorriente/Colombia`, getPIBCurrent)
 
 /**
  * @swagger
- * /API/Macro/PibConstante/Colombia:
+ * /api/micro/colombia/pib/constante:
  *   get:
  *     tags:
  *       - Macro
@@ -157,11 +173,11 @@ MacroRouter.get(`${path}/PibCorriente/Colombia`, getPIBCurrent)
  *       500:
  *         description: Internal Server Error
  */
-MacroRouter.get(`${path}/PibConstante/Colombia`, getPIBConst)
+
 
 /**
  * @swagger
- * /API/Macro/Tip/Colombia:
+ * /api/micro/colombia/tip:
  *   get:
  *     tags:
  *       - Macro
@@ -181,10 +197,10 @@ MacroRouter.get(`${path}/PibConstante/Colombia`, getPIBConst)
  *       500:
  *         description: Error al obtener datos de la TIP
  */
-MacroRouter.get(`${path}/Tip/Colombia`, getTip)
+
 /**
  * @swagger
- * /API/Macro/Dolar/Colombia:
+ * /api/micro/colombia/dolar:
  *   get:
  *     tags:
  *       - Macro
@@ -204,6 +220,3 @@ MacroRouter.get(`${path}/Tip/Colombia`, getTip)
  *       500:
  *         description: Error al obtener datos del valor del dólar
  */
-MacroRouter.get(`${path}/Dolar/Colombia`, getDolar)
-
-export default MacroRouter

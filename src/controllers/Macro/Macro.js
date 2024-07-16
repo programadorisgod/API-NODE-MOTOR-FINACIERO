@@ -11,10 +11,8 @@ export const postInflation = async (req, res) => {
     const inflation = await fetch('https://mpf.fly.dev/inflacion')
     const inflationJson = await inflation.json()
 
-    // eslint-disable-next-line camelcase
     const inflationFormat = Object.entries(inflationJson).map((inflation) => {
       return {
-        // eslint-disable-next-line camelcase
         year_month: inflation[0],
         inflation: inflation[1]
       }

@@ -7,6 +7,5 @@ export const getDate = () => {
   const hour = date.getHours()
   const minutes = date.getMinutes()
   const dateNow = `${year}-${month}-${day} ${hour}:${minutes}`
-
   return dateNow
 }

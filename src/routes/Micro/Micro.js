@@ -2,15 +2,24 @@ import { Router } from 'express'
 import { getIpc, getMetals, postIpc, postMetals, getAcctionsByName, getActions, postActions, getActionsInital } from '../../controllers/Micro/Micro.js'
 const routerMicro = Router()
 
-const path = '/API/Micro'
+const path = '/api/micro/colombia'
 
-routerMicro.get(`${path}/ipc`, postIpc)
-routerMicro.get(`${path}/metales`, postMetals)
+routerMicro.get(`${path}/save/ipc`, postIpc)
+
+routerMicro.get(`${path}/save/metales`, postMetals)
+
+routerMicro.get(`${path}/ipc`, getIpc)
+
+routerMicro.get(`${path}/metales`, getMetals)
+
+
+export default routerMicro
+
 
 // Get Data
 /**
  * @swagger
- * /API/Micro/ipc/Colombia:
+ * /api/micro/colombia/ipc:
  *   get:
  *     tags:
  *       - Micro
@@ -26,11 +35,10 @@ routerMicro.get(`${path}/metales`, postMetals)
  *       500:
  *         description: Internal Server Error
  */
-routerMicro.get(`${path}/ipc/Colombia`, getIpc)
 
 /**
  * @swagger
- * /API/Micro/metales/Colombia:
+ * /api/micro/colombia/metales:
  *   get:
  *     tags:
  *       - Micro
@@ -42,38 +50,8 @@ routerMicro.get(`${path}/ipc/Colombia`, getIpc)
  *           application/json:
  *             schema:
  *               type: array
- *               items:
- *                 $ref: '#/definitions/MetalesData'
  *       500:
  *         description: Error al obtener datos de los precios de metales
  */
 
-routerMicro.get(`${path}/metales/Colombia`, getMetals)
 
-/**
- * @swagger
- * /API/Micro/acciones/Empresas:
- *   get:
- *     tags:
- *       - Micro
- *     summary: Obtener datos de acciones de empresas
- *     responses:
- *       200:
- *         description: Respuesta exitosa
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/definitions/AccionesData'
- *       500:
- *         description: Error al obtener datos de acciones de empresas
- */
-routerMicro.get(`${path}/acciones/Empresas`, getActions)
-
-routerMicro.get(`${path}/acciones/:name`, getAcctionsByName)
-
-routerMicro.get(`${path}/inicial/acciones`, getActionsInital)
-
-routerMicro.post(`${path}/postActions`, postActions)
-export default routerMicro
